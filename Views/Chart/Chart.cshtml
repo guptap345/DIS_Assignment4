@@ -1,0 +1,99 @@
+﻿
+@model DIS_Assignment4.Models.ChartModel
+@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data</title>
+    <link rel="shortcut icon" type="image/png" href="~/img/covid-19_logo.jpg">
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="~/css/styles_Parul.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script>$(function () {
+            $("#nav-bar").load("/BootNav.html");
+            $("#footer").load("/footer.html");
+        });</script>
+</head>
+<body>
+    <div id="nav-bar"></div>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f4cc93c88a.js" crossorigin="anonymous"></script>
+    <div id="includedContent"></div>
+    <div class="center">
+        <h1></h1>
+
+        <div class="center">
+            <!-- <img class="d-block w-100" src="img/blue-covid-banner.jpg" alt="First slide"> -->
+            <h1></h1>
+            <h5 class="styled-table" style="color:white;background-color:indianred;font-size:1.5em;font-family:Garamond">The pie chart shows the underlying conditions of patients who succumbed to Covid-19</h5>
+
+            <h1>Pie chart Showing overall conditions</h1>
+            <div class="cente styled-table">
+                <canvas id="pieChart" style="display:compact;width:55%;height:400px;margin: 0 ;"></canvas>
+                @*<canvas id="bar-chart" style="display:block"></canvas>*@
+            </div>
+            <script>
+                new Chart(document.getElementById("pieChart"), {
+                type: '@Model.ChartType',
+                    data: {
+                    //labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                    labels: [@Html.Raw(@Model.Labels)],
+                        datasets: [
+                            {
+                        label: "Covid Count",
+                                data: [@Model.Data],
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#86CEE8", "#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#86CEE8", "#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#86CEE8", "#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#86CEE8"],
+                                fontFamily: "Poppins"
+                            }
+                        ]
+                    },
+                    options: {
+                    legend: { display: false },
+                        title: {
+                            display: true,
+                            text: '@Model.Title'
+                        },
+                        //responsive: true,
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                fontSize: 17,
+                                padding: -9
+                            }],
+                            xAxes: [{
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    beginAtZero: true,
+                                    display: false
+                                },
+                                fontSize: 17,
+                                padding: -9
+                            }]
+                        },
+
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <div id="includedCarousel"></div>
+    <!-- Load footer -->
+    <div id="footer"></div>
+    <!--  -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f4cc93c88a.js" crossorigin="anonymous"></script>
+</body>
+</html>
+

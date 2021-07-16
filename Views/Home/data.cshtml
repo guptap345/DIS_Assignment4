@@ -1,0 +1,108 @@
+﻿@model IEnumerable<DIS_Assignment4.Models.Covid_Condition>
+@{
+
+    string SearchFirstName = ViewBag.State;
+    var groupedData = (from p in Model
+                       where p.state.Contains(SearchFirstName)
+                       group p by p.condition_group into g
+                       select new { condition_group = g.Key, covid_19_deaths = g.Sum(c => Convert.ToInt64(c.covid_19_deaths)) }).ToList();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data</title>
+    <link rel="shortcut icon" type="image/png" href="~/img/covid-19_logo.jpg">
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="~/css/styles_Parul.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script>
+            $(function () {
+                $("#nav-bar").load("/BootNav.html");
+                // $("#includedCarousel").load("carousel.html");
+                $("#footer").load("/footer.html");
+            });
+        $(document).ready(function () {
+            $('#slcondition_group').val("@ViewBag.State");
+            $("#slcondition_group").change(function (opt) {                
+                document.location.href = '@Url.Action("Data","Home")' + '?state=' + this.value;
+            });
+            });
+    </script>
+</head>
+<body>
+    <div id="nav-bar"></div>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f4cc93c88a.js" crossorigin="anonymous"></script>
+    <div id="includedContent"></div>
+    <br>
+    <br>
+    <h5> Select a state to filter:</h5>
+    <select id="slcondition_group" style="width : auto">
+        @foreach (var c in Model.Select(s => s.state).Distinct())
+        {
+            <option id="c@c.state">
+                @c</option">
+
+            }
+</select>
+
+<div class="center">
+    <!-- <img class="d-block w-100" src="img/blue-covid-banner.jpg" alt="First slide"> -->
+    <h1></h1>
+    <!-- <table style="width:100%" class="center"> -->
+
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Condition Group</th>
+                <th>Covid Death Count</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var condition in groupedData)
+        {
+            <tr class="active-row">
+                <td>@Html.ActionLink(condition.condition_group, "condition", new { val = condition.condition_group }) </td>
+                @*<td>@condition.age_group</td>*@
+                <td>@condition.covid_19_deaths</td>
+                @*<td><button class="tablink">@Html.ActionLink("Update","Update",new { val = Model.Where(c=>c.condition_group==condition.condition_group) })</button></td>
+                    <td><button class="tablink" onclick="window.location.href='/DeleteRecord.html'">Delete</button></td>*@
+            </tr>
+        }
+    </table>
+    <!-- <img src="usf-logo-png-2.png" alt="university logo"> -->
+</div>
+<div id="includedCarousel"></div>
+<!-- <button class="tablink" onclick="">2020</button>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; -->
+<!-- <button class="tablink" onclick="">2021</button> -->
+<!-- Load footer -->
+<div id="footer"></div>
+<!--  -->
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/f4cc93c88a.js" crossorigin="anonymous"></script>
+</body>
+</html>
+
+@*<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Data</title>
+    </head>
+    <body>
+        <h2>data page exists</h2>
+        <ul>
+            @foreach (var condition in Model.data)
+            {
+                <li>@condition.condition</li>
+                <li>@condition.age_group</li>
+            }
+        </ul>
+    </body>
+    </html>*@
