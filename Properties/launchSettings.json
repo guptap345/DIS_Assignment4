@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DIS_Assignment4_Spring2021": {
+    "DIS_Assignment4": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5000",
